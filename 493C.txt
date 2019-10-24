@@ -1,0 +1,41 @@
+using namespace std;
+#include<bits/stdc++.h>
+    vector < int > a , b ;
+ 
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    int n , tk  , cnt=0,m;
+    scanf("%d",&n);
+    set < long long  > st ;
+    for (int i = 0 ; i < n;i++){
+        scanf("%d",&tk) , a.push_back(tk),st.insert(tk),st.insert(tk-1),st.insert(tk+1);
+    }
+    scanf("%d",&n);
+    for (int i = 0 ; i < n;i++){
+        scanf("%d",&tk) , b.push_back(tk),st.insert(tk),st.insert(tk-1),st.insert(tk+1);
+    }
+    sort(a.begin(),a.end());
+    sort(b.begin(),b.end());
+ 
+     long long f=-100000000000, s=0 ,mx=-1000000000000,ff,ss;
+    for (auto i : st ){
+ 
+     auto it = upper_bound(a.begin(),a.end(),i);
+     if (it == a.end())f = 2*a.size();
+     else {
+            int num = it-a.begin();
+            f = num*2 + (a.size()-(num))* 3 ;
+          }
+      it  = upper_bound(b.begin(),b.end(),i);
+       if (it == b.end())s = 2*b.size();
+        else {
+                int num = it-b.begin();
+            s = num*2 + (b.size()-num)* 3 ;
+            }
+        if (f-s >mx )ff=f,ss=s,mx=f-s;
+        else if (f-s==mx && f >ff)ff=f,ss=s,mx=f-s;
+    }
+    printf("%I64d:%I64d",ff,ss);
+}

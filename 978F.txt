@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define sf1(a)                scanf("%d", &a)
+#define sf2(a,b)              scanf("%d %d",&a, &b)
+#define sf3(a,b,c)            scanf("%d %d %d", &a, &b, &c)
+#define sf4(a,b,c,d)          scanf("%d %d %d %d", &a, &b, &c, &d)
+ 
+#define sf1ll(a)              scanf("%I64d", &a)
+#define sf2ll(a,b)            scanf("%lld %lld", &a, &b)
+#define sf3ll(a,b,c)          scanf("%I64d %I64d %I64d", &a, &b, &c)
+#define sf4ll(a,b,c,d)        scanf("%I64d %I64d %I64d %I64d", &a, &b, &c, &d)
+map < int , set <int >  > mp ;
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    int n , m , tk ;
+    cin >> n >> m  ;
+    vector < pair < int , int > > res ;
+    vector < int > vc, srt ;
+    for (int i = 1 ; i <= n ; i ++ )
+        cin >> tk , vc.push_back(tk),srt.push_back(tk);
+    sort(srt.begin(),srt.end());
+    for(int i = 0 ; i < m ; i++){
+        int u , v ;
+        cin >> u >> v ; u-- , v--;
+        mp[u].insert(v) ;
+        mp[v].insert(u);
+    }
+    for (int i = 0 ; i < n ;i++){
+        int v =  vc[i];
+        auto it = upper_bound(srt.begin(),srt.end(),v-1);
+        int idx = it-srt.begin()  ;
+        for (int j : mp[i]){
+            // cout << j+1 << " ";
+             if (vc[j] < v   ) idx--;
+        }
+        //cout << endl;
+        if (idx <= 0 ) cout << 0  << " ";
+        else cout << idx << " " ;
+    }
+}

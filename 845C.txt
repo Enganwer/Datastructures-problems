@@ -1,0 +1,30 @@
+#include <bits/stdc++.h>
+ 
+using namespace std;
+map < int , int > mp ;
+int arr[100005];
+bool cmp (const pair<int,int> &f , const pair<int,int> &s){
+return f.first <=s.first && f.second >= s.second;
+}
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    int n , k,m ;
+    vector < pair < int ,int > > vc;
+    scanf("%d",&n);
+    for (int i = 0 ; i <n ;i++){
+       scanf("%d%d",&k,&m);
+        vc.push_back({k,m});
+    }
+    sort(vc.begin(),vc.end());
+    for (int i = 0 ; i < n-2 ; i++){
+ 
+            for (int j = i+1 ; vc[j].first <=vc[i].second && j<n-1;j++ ){
+                if (vc[j].second >= vc[j+1].first  && vc[j].first <= vc[i].second && vc[j+1].first<=vc[i].second)
+                    exit(puts("No"));
+            }
+    }
+    puts("Yes");
+ 
+}

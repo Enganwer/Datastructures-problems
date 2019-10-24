@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define sf1(a)                scanf("%d", &a)
+#define sf2(a,b)              scanf("%d %d",&a, &b)
+#define sf3(a,b,c)            scanf("%d %d %d", &a, &b, &c)
+#define sf4(a,b,c,d)          scanf("%d %d %d %d", &a, &b, &c, &d)
+ 
+#define sf1ll(a)              scanf("%I64d", &a)
+#define sf2ll(a,b)            scanf("%lld %lld", &a, &b)
+#define sf3ll(a,b,c)          scanf("%I64d %I64d %I64d", &a, &b, &c)
+#define sf4ll(a,b,c,d)        scanf("%I64d %I64d %I64d %I64d", &a, &b, &c, &d)
+    map<long long, int> mp;
+ 
+int main()
+{ ios::sync_with_stdio(0) ; cin.tie(0);
+int n , tk , ans=0 , lst =0, res= 0,start=0 ;
+long long sum = 0 ; int an = n-1;
+cin >> n ; bool flag = false;
+vector < int > st,en;
+for (int i = 1 ; i<=n;i++)
+    {cin >> tk ;    sum += tk ;
+    if (tk) {if (!flag)start = i ; flag = true , res += tk ;}
+    else if (!tk&& res)
+        en.push_back(i-1),st.push_back(start),res=0,flag = false ;
+    if (!res && !tk) start = 0 , flag = false ;
+    if (i==n && res ) {en.push_back(i),st.push_back(start) ;}
+    mp[sum]++;
+    an = min(an,n-mp[sum]);
+    }
+cout << an;
+}

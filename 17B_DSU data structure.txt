@@ -1,0 +1,97 @@
+#include <bits/stdc++.h>
+using namespace std;
+ 
+#define MAXNODES 1005
+ 
+    int parent[MAXNODES];
+    int GroupSize[MAXNODES];
+    int vis[MAXNODES];
+ 
+    void init ()
+    {
+        for(int i = 0; i < MAXNODES; i++)
+        {
+            parent[i] = i;
+            GroupSize[i] = 1;
+        }
+    }
+ 
+    int FindLeader(int i)
+    {
+        if(parent[i] == i)  return i;
+ 
+        return parent[i] = FindLeader(parent[i]);
+    }
+ 
+    bool SameGroup(int x, int y)
+    {
+        int leader1 = FindLeader(x);
+        int leader2 = FindLeader(y);
+ 
+        return leader1 == leader2;
+    }
+ 
+ 
+    void MergeGroups(int x, int y)
+    {
+        int leader1 = FindLeader(x);
+        int leader2 = FindLeader(y);
+ 
+        if(leader1 == leader2)  return;
+ 
+        if(GroupSize[leader1] > GroupSize[leader2])
+        {
+            parent[leader2] =  leader1;
+            GroupSize[leader1] += GroupSize[leader2];
+        }
+ 
+    }
+ 
+    int GetSize(int x)
+    {
+        int leader = FindLeader(x);
+        return GroupSize[leader];
+    }
+ 
+vector < pair < int , pair < int ,int > > > edge;
+int main()
+{
+    cin.tie(0);
+    int n , m ;
+     cin >> n ;
+     vector < int > vc ;
+     for (int i =0 ; i < n ;i++){
+        int tk ;
+        cin >> tk ;
+     }
+     cin >> m ;
+     for (int i = 0 ; i < m ;i++){
+         int u , v , c;
+         cin >> u >> v >>c;
+         edge.push_back({c,{u,v}});
+     }
+     sort(edge.begin(),edge.end());
+     long long cost=  0 ;
+     init();
+     int edg = 0 ;
+     for (int i = 0 ; i < m ; i++){
+        auto frn = edge[i];
+        if (vis[edge[i].second.second])
+            continue;
+        if (FindLeader(edge[i].second.first) != FindLeader(edge[i].second.second)){
+            edg++;
+            cost += frn.first;
+        vis[edge[i].second.second] = 1;
+            MergeGroups(frn.second.first,frn.second.second);
+        }
+     }
+     if (edg != n-1)
+        puts("-1");
+     else
+     cout << cost;
+}
+ 
+ 
+ 
+ 
+ 
